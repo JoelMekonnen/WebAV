@@ -1,0 +1,57 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block content %}
+     <div class="row justify-content-center">
+           <div class="col-lg-6">
+               <div class="row justify-content-center">
+                    <h1 style="font-family:'Crimson Pro' !important; font-weight:bold; background-color:#F4F4F4; padding:30px;margin-top:100px !important;"> Welcome to Web AV </h1>
+               </div>
+               <div class="row justify-content-center">
+                    <p style="width:900px !important;font-size:25px !important;font-family:'Source code pro' !important;text-align:center;background-color:#F4F4F4; border-radius:15px !important; padding:30px !important;margin-top:40px !important;"> Inorder to use our online malware detection please upload a file and we will determine if its a virus or not. you can upload any type of executable files such as dlls and exe. </p>
+               </div>
+               <div class="row justify-content-center" style="margin-top:40px !important;">
+                    <div class="col-lg-10">
+                         <form action="{% url 'analyze' %}" method="POST" enctype="multipart/form-data" id="submitForm">
+                              {% csrf_token %}
+                              <div class="row justify-content-center">
+                                   <div class="form-group">
+                                        <div class="custom-file">
+                                             <input type="file" style="width:500px !important;" class="custom-file-input" name="uploadedFile" id="uploadedFile">
+                                             <label class="custom-file-label" style="font-weight:bold; font-family:'Source code pro' !important;" for="customFile">Choose file</label>
+                                           </div>
+                                      </div>
+                              </div>
+                              <div class="row justify-content-center">
+                                   <div class="form-group">
+                                        <button type="submit" style="font-family: 'Source code pro' !important; font-weight:bold;" class="btn btn-primary">Analyze</button>
+                                    </div>
+                              </div>
+                              <div class="row justify-content-center">
+                                   <div class='progress' id="progress_div" style="padding:30px !important;">
+                                        <div class='bar' id='bar1'></div>
+                                        <div class='percent' id='percent1'>0%</div>
+                                   </div>
+                              </div>
+                              <div class="row justify-content-center">
+                                   <h5 style="margin-top:30px !important;"> <strong>Result:</strong> <span id="response"></span> </h5>
+                              </div>
+                       </form>
+                 </div>
+                    </div>
+                    
+               <div class="row justify-content-center">
+                     <div class="col-lg-4"></div>
+               </div>
+           </div>
+     </div>
+{% endblock content %}
+{% block scripts %}
+<script>
+     $('#uploadedFile').on('change',function(e){
+          //get the file name
+          var fileName = e.target.files[0].name;
+          //replace the "Choose a file" label
+          $(this).next('.custom-file-label').html(fileName);
+      });
+</script>
+{% endblock scripts %}
